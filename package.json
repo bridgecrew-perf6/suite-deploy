@@ -1,0 +1,203 @@
+{
+  "name": "suite-deploy",
+  "publisher": "mattplant",
+  "displayName": "SuiteDeploy",
+  "description": "SuiteDeploy is a Visual Studio Code extension that supports deploying your NetSuite customizations.",
+  "icon": "resources/nsi.png",
+  "version": "0.5.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattplant/suite-deploy"
+  },
+  "author": {
+    "name": "Matthew Plant",
+    "url": "https://github.com/mattplant"
+  },
+  "engines": {
+    "vscode": "^1.62.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "netsuite",
+    "sdf",
+    "deploy",
+    "tools"
+  ],
+  "activationEvents": [
+    "onView:nsiObjects",
+    "onCommand:nsi.openOutput",
+    "onCommand:nsi.reset"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "nsiExplorer",
+          "title": "SuiteDeploy",
+          "icon": "resources/nsi.png"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "nsiObjects",
+        "contents": "[Load Objects](command:nsi.processLocalObjects)"
+      },
+      {
+        "view": "nsiObjs",
+        "contents": "No server object records found.\n[Retrieve Objects](command:nsi.retrieveServerObjects)"
+      }
+    ],
+    "views": {
+      "nsiExplorer": [
+        {
+          "id": "nsiObjects",
+          "name": "Local Objects",
+          "icon": "resources/nsi.png",
+          "contextualTitle": "SuiteDeploy"
+        },
+        {
+          "id": "nsiObjs",
+          "name": "Server Objects",
+          "icon": "resources/nsi.png",
+          "contextualTitle": "SuiteDeploy"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "nsi.openOutput",
+        "title": "Open Output",
+        "category": "SuiteDeploy"
+      },
+      {
+        "command": "nsi.reset",
+        "title": "Reset",
+        "category": "SuiteDeploy"
+      },
+      {
+        "command": "nsi.retrieveServerObjects",
+        "title": "Retrieve Objects",
+        "category": "SuiteDeploy"
+      },
+      {
+        "command": "nsiObjects.reset",
+        "title": "Refresh Local Objects",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "nsiObjects.verify",
+        "title": "Verify Deployment",
+        "icon": "$(check-all)",
+        "category": "SuiteDeploy"
+      },
+      {
+        "command": "nsiObjects.jsonFile",
+        "title": "JSON Local",
+        "icon": "$(json)"
+      },
+      {
+        "command": "nsiObjects.deployObject",
+        "title": "Deploy Object",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "nsiObjects.xmlFile",
+        "title": "XML SDF",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "nsiObjs.reset",
+        "title": "Refresh Server Objects",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "nsiObjs.importObject",
+        "title": "Import Object",
+        "icon": "$(cloud-download)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "nsi.openOutput"
+        },
+        {
+          "command": "nsi.retrieveServerObjects"
+        },
+        {
+          "command": "nsiObjects.verify"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "nsiObjects.verify",
+          "when": "view == nsiObjects",
+          "group": "navigation"
+        },
+        {
+          "command": "nsiObjects.reset",
+          "when": "view == nsiObjects",
+          "group": "navigation"
+        },
+        {
+          "command": "nsiObjs.reset",
+          "when": "view == nsiObjs",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "nsiObjects.jsonFile",
+          "when": "viewItem == object",
+          "group": "inline"
+        },
+        {
+          "command": "nsiObjects.xmlFile",
+          "when": "viewItem == object",
+          "group": "inline"
+        },
+        {
+          "command": "nsiObjects.deployObject",
+          "when": "viewItem == object",
+          "group": "inline"
+        },
+        {
+          "command": "nsiObjs.importObject",
+          "when": "viewItem == obj",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.4",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.62.0",
+    "@types/xml2js": "^0.4.9",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "@vscode/test-electron": "^1.6.2",
+    "eslint": "^8.1.0",
+    "glob": "^7.1.7",
+    "mocha": "^9.1.3",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "xml2js": "^0.4.23"
+  }
+}
